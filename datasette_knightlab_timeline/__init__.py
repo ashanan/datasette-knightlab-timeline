@@ -20,6 +20,14 @@ def extra_js_urls(database, table, columns, view_name, datasette):
     ]
 
 @hookimpl
+def extra_css_urls():
+    return [
+        {
+            "url": "https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css"
+        }
+    ]
+
+@hookimpl
 def extra_body_script(datasette):
     timeline_url = datasette.urls.static_plugins(
         "datasette-knightlab-timeline", "timeline.js"
