@@ -31,16 +31,35 @@ def menu_links(datasette):
 @hookimpl
 def register_routes():
     return [
-        (r"^/-/timeline$", timeline)
+        (r"^/-/(timeline|timeline.json)$", timeline)
     ]
 
 async def timeline(request, datasette):
-    return Response.html(
-        await datasette.render_template(
-        "timeline.html",
-        {
-            "text": "template test"
-        },
-        request=request,
+    print(request.headers)
+    print(request.path)
+    if request.path == '/-/timeline.json':
+        return Response.json({
+            'events': [
+                {
+                    'start_date': {
+                        'year': 2022
+                    },
+                    'text': {
+                        'text': 'timeline text'
+                    }
+                }
+            ],
+            'title': {
+                'text': {'text': 'Hardcoded timeline!'}
+            }
+        })
+    else:
+        return Response.html(
+            await datasette.render_template(
+                "timeline.html",
+                {
+                    "text": "template test"
+                },
+                request=request,
+            )
         )
-    )
