@@ -1,4 +1,5 @@
 from datasette import hookimpl, Response
+import dateutil.parser
 
 @hookimpl
 def extra_js_urls(database, table, columns, view_name, datasette):
@@ -62,14 +63,20 @@ async def build_events(datasette):
     results = await database.execute(plugin_config['query'])
     events_array = []
     for row in results:
-        text = '%s%s' %(plugin_config['text'], row[plugin_config['text_column']])
-        events_array.append({
+        events_array.append(build_event_from_row(row, plugin_config))
+
+    return events_array
+
+def build_event_from_row(row, plugin_config):
+    start_date = dateutil.parser.isoparse(row['start_date'])
+    text = '%s%s' %(plugin_config['text'], row[plugin_config['text_column']])
+    return {
             'start_date': {
-                'year': 2022
+                'year': start_date.year,
+                'month': start_date.month,
+                'day': start_date.day
             },
             'text': {
                 'text': text
             }
-        })
-
-    return events_array
+        }
