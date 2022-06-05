@@ -1,0 +1,3 @@
+[datasette]
+knightlab_timeline = datasette_knightlab_timeline
+
