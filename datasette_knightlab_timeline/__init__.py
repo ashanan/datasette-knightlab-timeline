@@ -1,20 +1,20 @@
 from datasette import hookimpl, Response
 
-# @hookimpl
-# def extra_js_urls(database, table, columns, view_name, datasette):
-#     timeline_url = datasette.urls.static_plugins(
-#         "datasette-knightlab-timeline", "timeline.js"
-#     )
-#     print(timeline_url)
+@hookimpl
+def extra_js_urls(database, table, columns, view_name, datasette):
+    timeline_url = datasette.urls.static_plugins(
+        "datasette-knightlab-timeline", "timeline.js"
+    )
+    print(timeline_url)
 
-#     return [
-#         {
-#             "url": datasette.urls.static_plugins(
-#                 "datasette-knightlab-timeline", "timeline.js"
-#             ),
-#             "module": True,
-#         }
-#     ]
+    return [
+        {
+            "url": datasette.urls.static_plugins(
+                "datasette-knightlab-timeline", "timeline.js"
+            ),
+            "module": True,
+        }
+    ]
 
 @hookimpl
 def extra_body_script(datasette):
