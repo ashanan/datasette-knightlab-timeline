@@ -13,6 +13,9 @@ def extra_js_urls(database, table, columns, view_name, datasette):
                 "datasette-knightlab-timeline", "timeline.js"
             ),
             "module": True,
+        },
+        {
+            "url": "https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"
         }
     ]
 
