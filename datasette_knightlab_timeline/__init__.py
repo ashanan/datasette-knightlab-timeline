@@ -22,16 +22,13 @@ def extra_css_urls():
         }
     ]
 
-@hookimpl
-def extra_body_script(datasette):
-    timeline_url = datasette.urls.static_plugins(
-        "datasette-knightlab-timeline", "timeline.js"
-    )
-
-    return {
-        "module": True,
-        "script": "console.log('hello datasette world!', '%s')" %(timeline_url)
-    }
+# @hookimpl
+# def extra_body_script():
+#     script = "eventsJson.push({}); console.log(eventsJson);"
+#     return {
+#         "module": True,
+#         "script": script
+#     }
 
 @hookimpl
 def menu_links(datasette):
