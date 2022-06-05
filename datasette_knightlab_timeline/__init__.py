@@ -35,20 +35,9 @@ def register_routes():
     ]
 
 async def timeline(request, datasette):
-    print(request.headers)
-    print(request.path)
     if request.path == '/-/timeline.json':
         return Response.json({
-            'events': [
-                {
-                    'start_date': {
-                        'year': 2022
-                    },
-                    'text': {
-                        'text': 'timeline text'
-                    }
-                }
-            ],
+            'events': await build_events(datasette),
             'title': {
                 'text': {'text': 'Hardcoded timeline!'}
             }
@@ -63,3 +52,24 @@ async def timeline(request, datasette):
                 request=request,
             )
         )
+
+async def build_events(datasette):
+    plugin_config = datasette.plugin_config(
+        "datasette-knightlab-timeline"
+    )
+    database = datasette.databases[plugin_config['database']]
+
+    results = await database.execute(plugin_config['query'])
+    events_array = []
+    for row in results:
+        text = '%s%s' %(plugin_config['text'], row[plugin_config['text_column']])
+        events_array.append({
+            'start_date': {
+                'year': 2022
+            },
+            'text': {
+                'text': text
+            }
+        })
+
+    return events_array
