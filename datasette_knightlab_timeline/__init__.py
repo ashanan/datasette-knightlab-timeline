@@ -22,14 +22,6 @@ def extra_css_urls():
         }
     ]
 
-# @hookimpl
-# def extra_body_script():
-#     script = "eventsJson.push({}); console.log(eventsJson);"
-#     return {
-#         "module": True,
-#         "script": script
-#     }
-
 @hookimpl
 def menu_links(datasette):
     return [
