@@ -2,7 +2,7 @@ from datasette import hookimpl, Response
 import dateutil.parser
 
 @hookimpl
-def extra_js_urls(database, table, columns, view_name, datasette):
+def extra_js_urls(datasette):
     return [
         {
             "url": datasette.urls.static_plugins(
