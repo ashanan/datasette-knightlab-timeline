@@ -15,7 +15,30 @@ Install this plugin in the same environment as Datasette.
 
 ## Usage
 
-Usage instructions go here.
+Add a `datasette-knightlab-timeline` object to the metadata plugins. 
+
+```json
+{
+    "title": "This is the top-level title in metadata.json",
+    "plugins": {
+		"datasette-knightlab-timeline": {
+			"databases": [{
+				"database": "database_one",
+				"query": "SELECT  date_measured as start_date FROM measurement_event WHERE date_measured > (SELECT DATETIME('now', '-30 day'))",
+				"text": "This text will prepend the value of the column whose name is in 'text_colum'",
+				"text_column": "Average"
+			}, {
+				"database": "inaturalist",
+				"query": "SELECT created_at as start_date, species_guess FROM observations WHERE created_at > (SELECT DATETIME('now', '-30 day'))",
+				"text": "Nature observation!  Observed: ",
+				"text_column": "species_guess"
+			}]
+		}
+    }
+}
+
+
+```
 
 ## Development
 
