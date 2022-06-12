@@ -58,12 +58,13 @@ async def build_events(datasette):
     plugin_config = datasette.plugin_config(
         "datasette-knightlab-timeline"
     )
-    database = datasette.databases[plugin_config['database']]
-
-    results = await database.execute(plugin_config['query'])
+    databases = plugin_config['databases']
     events_array = []
-    for row in results:
-        events_array.append(build_event_from_row(row, plugin_config))
+    for database_config in databases:
+        database = datasette.databases[database_config['database']]
+        results = await database.execute(database_config['query'])
+        for row in results:
+            events_array.append(build_event_from_row(row, database_config))
 
     return events_array
 
