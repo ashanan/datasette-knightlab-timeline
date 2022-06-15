@@ -59,25 +59,26 @@ async def build_events(datasette):
         "datasette-knightlab-timeline"
     )
     databases = plugin_config['databases']
-    events_array = []
+    events_by_day = {}
     for database_config in databases:
         database = datasette.databases[database_config['database']]
         results = await database.execute(database_config['query'])
         for row in results:
-            events_array.append(build_event_from_row(row, database_config))
+            start_date = dateutil.parser.isoparse(row['start_date'])
+            key = start_date.strftime('%m-%d-%y')
+            text = '%s%s' %(database_config['text'], row[database_config['text_column']])
+            if key in events_by_day:
+                events_by_day[key]['text']['text'] = '\n'.join([events_by_day[key]['text']['text'], text])
+            else:
+                events_by_day[key] = {
+                    'start_date': {
+                        'year': start_date.year,
+                        'month': start_date.month,
+                        'day': start_date.day
+                    },
+                    'text': {
+                        'text': text
+                    }
+                }
 
-    return events_array
-
-def build_event_from_row(row, plugin_config):
-    start_date = dateutil.parser.isoparse(row['start_date'])
-    text = '%s%s' %(plugin_config['text'], row[plugin_config['text_column']])
-    return {
-            'start_date': {
-                'year': start_date.year,
-                'month': start_date.month,
-                'day': start_date.day
-            },
-            'text': {
-                'text': text
-            }
-        }
+    return list(events_by_day.values())

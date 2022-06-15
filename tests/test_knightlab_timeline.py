@@ -1,6 +1,7 @@
 from datasette.app import Datasette
 
 from datetime import datetime, timedelta
+from unittest import TestCase
 import pytest
 import sqlite_utils
 import textwrap
@@ -28,6 +29,23 @@ async def test_timeline_json_reachable(ds):
 
     payload = response.json()
     assert len(payload['events']) > 0
+
+@pytest.mark.asyncio
+async def test_timeline_json_conforms_to_contract(ds):
+    response = await ds.client.get("/-/timeline.json")
+    assert response.status_code == 200
+
+    payload = response.json()
+    assert len(payload['events']) > 0
+
+    today = datetime.now()
+    expected_dict = {
+        'year': today.year,
+        'month': today.month,
+        'day': today.day
+    }
+    slide = payload['events'][0]
+    TestCase().assertDictEqual(expected_dict, slide['start_date'])
 
 @pytest.fixture
 def ds(tmp_path_factory):
