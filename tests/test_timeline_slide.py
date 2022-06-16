@@ -1,4 +1,5 @@
 from datetime import datetime
+import json
 import pytest
 
 from datasette_knightlab_timeline.timeline_slide import TimelineSlide
@@ -16,6 +17,20 @@ async def test_add_text(text, slide):
     addedText = "test text added in test_add_text"
     slide.addText(addedText)
     assert slide.text == [text, addedText]
+
+@pytest.mark.asyncio
+async def test_to_json(text, today, slide):
+    expected_json = {
+                        'start_date': {
+                            'year': today.year,
+                            'month': today.month,
+                            'day': today.day
+                        },
+                        'text': {
+                            'text': text
+                        }
+                    }
+    assert slide.toJson() == json.dumps(expected_json)
 
 @pytest.fixture
 def text():
