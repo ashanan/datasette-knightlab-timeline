@@ -15,6 +15,9 @@ class TimelineSlide:
                         'day': self.start_date.day
                     },
                     'text': {
-                        'text': '\n'.join(self.text)
+                        'text': self.wrapText(self.text)
                     }
                 }
+
+    def wrapText(self, text_entries):
+        return '\n'.join(text_entries)
