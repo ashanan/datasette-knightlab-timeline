@@ -1,6 +1,8 @@
 from datasette import hookimpl, Response
 import dateutil.parser
 
+from datasette_knightlab_timeline.timeline_slide import TimelineSlide
+
 @hookimpl
 def extra_js_urls(datasette):
     return [
@@ -59,7 +61,7 @@ async def build_events(datasette):
         "datasette-knightlab-timeline"
     )
     databases = plugin_config['databases']
-    events_by_day = {}
+    slides_by_day = {}
     for database_config in databases:
         database = datasette.databases[database_config['database']]
         results = await database.execute(database_config['query'])
@@ -67,18 +69,9 @@ async def build_events(datasette):
             start_date = dateutil.parser.isoparse(row['start_date'])
             key = start_date.strftime('%m-%d-%y')
             text = '%s%s' %(database_config['text'], row[database_config['text_column']])
-            if key in events_by_day:
-                events_by_day[key]['text']['text'] = '\n'.join([events_by_day[key]['text']['text'], text])
+            if key in slides_by_day:
+                slides_by_day[key].addText(text)
             else:
-                events_by_day[key] = {
-                    'start_date': {
-                        'year': start_date.year,
-                        'month': start_date.month,
-                        'day': start_date.day
-                    },
-                    'text': {
-                        'text': text
-                    }
-                }
+                slides_by_day[key] = TimelineSlide({'start_date': start_date, 'text': text})
 
-    return list(events_by_day.values())
+    return list(map(lambda slide: slide.toDict(), slides_by_day.values()))

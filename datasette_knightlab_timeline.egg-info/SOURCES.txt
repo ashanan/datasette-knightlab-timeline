@@ -2,6 +2,7 @@ LICENSE
 README.md
 setup.py
 datasette_knightlab_timeline/__init__.py
+datasette_knightlab_timeline/timeline_slide.py
 datasette_knightlab_timeline.egg-info/PKG-INFO
 datasette_knightlab_timeline.egg-info/SOURCES.txt
 datasette_knightlab_timeline.egg-info/dependency_links.txt
