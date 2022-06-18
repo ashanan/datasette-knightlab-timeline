@@ -15,7 +15,7 @@ class TimelineSlide:
                         'day': self.start_date.day
                     },
                     'text': {
-                        'text': self.wrapText(True)
+                        'text': self.wrapText()
                     }
                 }
 

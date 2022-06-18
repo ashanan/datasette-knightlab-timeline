@@ -74,4 +74,12 @@ async def build_events(datasette):
             else:
                 slides_by_day[key] = TimelineSlide({'start_date': start_date, 'text': text})
 
-    return list(map(lambda slide: slide.toDict(), slides_by_day.values()))
+    return [await buildTimelineSlideView(datasette, slide) for slide in slides_by_day.values()]
+
+async def buildTimelineSlideView(datasette, slide):
+    view = slide.toDict()
+    view['text'] = await renderTimelineText(datasette, slide)
+    return view
+
+async def renderTimelineText(datasette, slide):
+    return await datasette.render_template("text.html", {'text_entries': slide.text})

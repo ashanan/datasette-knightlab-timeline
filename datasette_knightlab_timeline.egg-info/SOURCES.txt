@@ -10,4 +10,5 @@ datasette_knightlab_timeline.egg-info/entry_points.txt
 datasette_knightlab_timeline.egg-info/requires.txt
 datasette_knightlab_timeline.egg-info/top_level.txt
 datasette_knightlab_timeline/static/timeline.js
+datasette_knightlab_timeline/templates/text.html
 datasette_knightlab_timeline/templates/timeline.html
