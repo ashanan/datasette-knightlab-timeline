@@ -15,7 +15,7 @@ Install this plugin in the same environment as Datasette.
 
 ## Usage
 
-Add a `datasette-knightlab-timeline` object to the metadata plugins. 
+Add a `datasette-knightlab-timeline` object to the metadata plugins section.
 
 ```json
 {
