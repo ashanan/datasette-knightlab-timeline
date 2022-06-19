@@ -1,3 +1,4 @@
+import json
 from datasette import hookimpl, Response
 import dateutil.parser
 
@@ -38,6 +39,7 @@ def register_routes():
     ]
 
 async def timeline(request, datasette):
+    plugin_config = datasette.plugin_config( "datasette-knightlab-timeline")
     if request.path == '/-/timeline.json':
         return Response.json({
             'events': await build_events(datasette),
@@ -50,7 +52,7 @@ async def timeline(request, datasette):
             await datasette.render_template(
                 "timeline.html",
                 {
-                    "text": "template test"
+                   "options": plugin_config["options"]
                 },
                 request=request,
             )
