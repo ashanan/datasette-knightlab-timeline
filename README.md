@@ -25,7 +25,7 @@ Add a `datasette-knightlab-timeline` object to the metadata plugins section.
 			"databases": [{
 				"database": "database_one",
 				"query": "SELECT  date_measured as start_date FROM measurement_event WHERE date_measured > (SELECT DATETIME('now', '-30 day'))",
-				"text": "This text will prepend the value of the column whose name is in 'text_colum'",
+				"text": "This text will prepend the value of the column whose name is in 'text_column'",
 				"text_column": "Average"
 			}, {
 				"database": "inaturalist",
