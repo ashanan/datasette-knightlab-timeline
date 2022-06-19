@@ -78,7 +78,7 @@ async def build_events(datasette):
 
 async def buildTimelineSlideView(datasette, slide):
     view = slide.toDict()
-    view['text'] = await renderTimelineText(datasette, slide)
+    view['text']['text'] = await renderTimelineText(datasette, slide)
     return view
 
 async def renderTimelineText(datasette, slide):

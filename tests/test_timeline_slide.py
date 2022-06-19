@@ -26,7 +26,7 @@ async def test_to_dict(text, today, slide):
                             'day': today.day
                         },
                         'text': {
-                            'text': text
+                            'text': [text]
                         }
                     }
     assert slide.toDict() == expected_dict
@@ -42,7 +42,7 @@ async def test_to_dict_with_added_text(text, today, slide):
                             'day': today.day
                         },
                         'text': {
-                            'text': '%s\n%s'%(text, addedText)
+                            'text': [text, addedText]
                         }
                     }
     assert slide.toDict() == expected_dict
