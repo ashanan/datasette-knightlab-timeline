@@ -3,12 +3,11 @@
 {% block title %}Timeline{% endblock %}
 
 {% block content %}
+
 <div id='timeline-embed' style="width: 100%; height: 600px"></div>
 
 <script>
     window.timeline = '/-/timeline.json';
-    // window.timeline = 'https://raw.githubusercontent.com/NUKnightLab/TimelineJS3/master/website/templates/examples/houston/timeline3.json';
-
-    console.log(window.timeline);
+    window.timelineOptions =  {{ options|tojson }};
 </script>
 {% endblock %}

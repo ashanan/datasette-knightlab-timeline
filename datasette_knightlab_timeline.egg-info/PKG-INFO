@@ -25,7 +25,7 @@ Description: # datasette-knightlab-timeline
         
         ## Usage
         
-        Add a `datasette-knightlab-timeline` object to the metadata plugins. 
+        Add a `datasette-knightlab-timeline` object to the metadata plugins section.
         
         ```json
         {
@@ -35,7 +35,7 @@ Description: # datasette-knightlab-timeline
         			"databases": [{
         				"database": "database_one",
         				"query": "SELECT  date_measured as start_date FROM measurement_event WHERE date_measured > (SELECT DATETIME('now', '-30 day'))",
-        				"text": "This text will prepend the value of the column whose name is in 'text_colum'",
+        				"text": "This text will prepend the value of the column whose name is in 'text_column'",
         				"text_column": "Average"
         			}, {
         				"database": "inaturalist",
