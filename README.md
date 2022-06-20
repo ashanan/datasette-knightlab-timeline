@@ -24,14 +24,10 @@ Add a `datasette-knightlab-timeline` object to the metadata plugins section.
 		"datasette-knightlab-timeline": {
 			"databases": [{
 				"database": "database_one",
-				"query": "SELECT  date_measured as start_date FROM measurement_event WHERE date_measured > (SELECT DATETIME('now', '-30 day'))",
-				"text": "This text will prepend the value of the column whose name is in 'text_column'",
-				"text_column": "Average"
+				"query": "SELECT date_measured as start_date, text FROM measurement_event WHERE date_measured > (SELECT DATETIME('now', '-30 day'))"
 			}, {
 				"database": "inaturalist",
-				"query": "SELECT created_at as start_date, species_guess FROM observations WHERE created_at > (SELECT DATETIME('now', '-30 day'))",
-				"text": "Nature observation!  Observed: ",
-				"text_column": "species_guess"
+				"query": "SELECT created_at as start_date, 'Nature observation!  Observed ' || species_guess || '.' AS text FROM observations WHERE created_at > (SELECT DATETIME('now', '-30 day'))"
 			}]
 		}
     }
