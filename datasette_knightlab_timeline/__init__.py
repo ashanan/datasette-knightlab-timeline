@@ -70,7 +70,7 @@ async def build_events(datasette):
         for row in results:
             start_date = dateutil.parser.isoparse(row['start_date'])
             key = start_date.strftime('%m-%d-%y')
-            text = '%s%s' %(database_config['text'], row[database_config['text_column']])
+            text = row['text']
             if key in slides_by_day:
                 slides_by_day[key].addText(text)
             else:
